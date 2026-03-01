@@ -1,3 +1,6 @@
+using EmployeeManagementService.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
@@ -11,6 +14,11 @@ builder.Services.AddAuthentication()
             options.RequireHttpsMetadata = false;
         }
     });
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("database"));
+});
 
 var app = builder.Build();
 
