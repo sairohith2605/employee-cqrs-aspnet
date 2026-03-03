@@ -17,7 +17,7 @@ builder.Services.AddAuthentication()
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("database"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("sqldb"));
 });
 
 var app = builder.Build();

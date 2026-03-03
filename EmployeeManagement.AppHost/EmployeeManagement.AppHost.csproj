@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EmployeeManagementService\EmployeeManagementService.csproj" />
+    <ProjectReference Include="..\EmployeeManagement.MigrationService\EmployeeManagement.MigrationService.csproj" />
   </ItemGroup>
 
   <ItemGroup>
