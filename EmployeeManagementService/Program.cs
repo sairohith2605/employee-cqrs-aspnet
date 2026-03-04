@@ -1,3 +1,4 @@
+using EmployeeManagementService.Infrastructure.Repository;
 using EmployeeManagementService.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +21,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("sqldb"));
 });
 
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
