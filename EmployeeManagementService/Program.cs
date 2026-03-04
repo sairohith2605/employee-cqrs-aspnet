@@ -1,3 +1,4 @@
+using EmployeeManagementService.Infrastructure.Handlers;
 using EmployeeManagementService.Infrastructure.Repository;
 using EmployeeManagementService.Models;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 });
 
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
+builder.Services.AddControllers();
+builder.Services.AddSwaggerGen();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblies(
+    typeof(CreateEmployeeHandler).Assembly, typeof(GetEmployeeByIdHandler).Assembly));
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
