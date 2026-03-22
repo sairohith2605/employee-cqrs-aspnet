@@ -11,12 +11,19 @@ pr:
 pool:
   name: 'AgentPool-Ubuntu-H01'
 
+variables:
+  DOCKER_HOST: unix:///var/run/docker.sock
+
 steps:
   - task: UseDotNet@2
     displayName: 'Install .NET SDK'
     inputs:
       packageType: 'sdk'
       version: '10.x'
+
+  - script: |
+      docker info
+    displayName: 'Verify Docker is available'
 
   - task: DotNetCoreCLI@2
     displayName: 'Restore NuGet Packages'
@@ -30,3 +37,17 @@ steps:
       command: 'build'
       projects: '**/*.csproj'
       arguments: '--no-restore'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Run Integration Tests'
+    inputs:
+      command: 'test'
+      projects: '**/EmployeeManagement.IntegrationTest.csproj'
+      arguments: '--no-build --logger trx --results-directory $(Agent.TempDirectory)/TestResults'
+
+  - task: PublishTestResults@2
+    displayName: 'Publish Integration Test Results'
+    condition: always()
+    inputs:
+      testResultsFormat: 'VSTest'
+      testResultsFiles: '$(Agent.TempDirectory)/TestResults/*.trx'
