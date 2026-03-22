@@ -15,7 +15,7 @@ builder.AddProject<Projects.EmployeeManagementService>("employeemanagementservic
     .WithReference(sqldb)
     .WaitFor(sqldb)
     .WithReference(migrationService)
-    .WaitFor(migrationService)
+    .WaitForCompletion(migrationService)
     .WithReference(keycloak)
     .WaitFor(keycloak);
 
