@@ -9,7 +9,7 @@ pr:
       - main
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: 'AgentPool-Ubuntu-H01'
 
 steps:
   - task: UseDotNet@2
