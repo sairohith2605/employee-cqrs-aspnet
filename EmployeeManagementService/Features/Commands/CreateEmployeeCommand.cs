@@ -1,8 +1,10 @@
-﻿using MediatR;
+﻿using EmployeeManagementService.Features.Responses;
+using MediatR;
 
 namespace EmployeeManagementService.Features.Commands;
 
-public class CreateEmployeeCommand : IRequest<Guid>
+/// <summary>Command to create a new employee. Returns the created employee's details on success.</summary>
+public class CreateEmployeeCommand : IRequest<CreateEmployeeResult>
 {
     public required string FirstName { get; set; }
     

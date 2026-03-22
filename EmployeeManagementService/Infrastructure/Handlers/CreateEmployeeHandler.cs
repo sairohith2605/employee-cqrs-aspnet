@@ -1,13 +1,19 @@
 ﻿using EmployeeManagementService.Features.Commands;
+using EmployeeManagementService.Features.Responses;
 using EmployeeManagementService.Infrastructure.Repository;
 using EmployeeManagementService.Models;
 using MediatR;
 
 namespace EmployeeManagementService.Infrastructure.Handlers;
 
-public class CreateEmployeeHandler(IEmployeeRepository employeeRepository) : IRequestHandler<CreateEmployeeCommand, Guid>
+/// <summary>MediatR handler that processes <see cref="CreateEmployeeCommand"/> requests.</summary>
+public class CreateEmployeeHandler(IEmployeeRepository employeeRepository) : IRequestHandler<CreateEmployeeCommand, CreateEmployeeResult>
 {
-    public async Task<Guid> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
+    /// <summary>Handles a <see cref="CreateEmployeeCommand"/> by creating a new employee record.</summary>
+    /// <param name="request">The command containing the new employee's details.</param>
+    /// <param name="cancellationToken">Token to cancel the operation.</param>
+    /// <returns>A <see cref="CreateEmployeeResult"/> containing the new employee's details.</returns>
+    public async Task<CreateEmployeeResult> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
     {
         var employee = new Employee
         {
@@ -16,7 +22,14 @@ public class CreateEmployeeHandler(IEmployeeRepository employeeRepository) : IRe
             Email = request.Email,
             DateOfBirth = request.DateOfBirth
         };
-        var registeredEmployeeId = await employeeRepository.CreateAsync(employee);
-        return registeredEmployeeId;
+        var id = await employeeRepository.CreateAsync(employee);
+        return new CreateEmployeeResult
+        {
+            Id = id,
+            FirstName = employee.FirstName,
+            LastName = employee.LastName,
+            Email = employee.Email,
+            DateOfBirth = employee.DateOfBirth
+        };
     }
 }

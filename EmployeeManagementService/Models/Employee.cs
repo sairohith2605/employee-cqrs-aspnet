@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EmployeeManagementService.Models;
 
+/// <summary>Represents an employee in the system.</summary>
 public class Employee
 {
     public Guid Id { get; init; }
