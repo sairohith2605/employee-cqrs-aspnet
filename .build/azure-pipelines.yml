@@ -43,7 +43,7 @@ steps:
     inputs:
       command: 'test'
       projects: '**/EmployeeManagement.IntegrationTest.csproj'
-      arguments: '--no-build'
+      arguments: '--no-build -v diag'
 
   - task: PublishTestResults@2
     displayName: 'Publish Integration Test Results'
