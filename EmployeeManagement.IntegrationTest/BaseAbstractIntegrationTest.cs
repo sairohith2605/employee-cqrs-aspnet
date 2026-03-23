@@ -3,9 +3,11 @@ using Aspire.Hosting.Testing;
 
 namespace EmployeeManagement.IntegrationTest;
 
-public abstract class BaseAbstractIntegrationTest : IAsyncLifetime
+public class ApplicationBaseTextFixture : IAsyncLifetime
 {
     private DistributedApplication? _employeeManagementApp;
+
+    public DistributedApplication EmployeeManagementApp => _employeeManagementApp ?? throw new Exception("Invalid application state");
 
     protected HttpClient HttpClient { get; private set; } = null!;
 
@@ -15,11 +17,15 @@ public abstract class BaseAbstractIntegrationTest : IAsyncLifetime
             .CreateAsync<Projects.EmployeeManagement_AppHost>();
         _employeeManagementApp = await appHost.BuildAsync();
         await _employeeManagementApp.StartAsync();
-        HttpClient = _employeeManagementApp.CreateHttpClient("employeemanagementservice");
     }
 
     public async Task DisposeAsync()
     {
         await _employeeManagementApp!.DisposeAsync();
     }
+}
+
+[CollectionDefinition("EmployeeManagement")]
+public class EmployeeManagementCollection : ICollectionFixture<ApplicationBaseTextFixture>
+{
 }
