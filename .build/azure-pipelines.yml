@@ -44,8 +44,8 @@ steps:
       command: custom
       custom: dev-certs
       arguments: https --trust
-      env:
-        SSL_CERT_DIR: '$(HOME)/.aspnet/dev-certs/trust'
+    env:
+      SSL_CERT_DIR: '$(HOME)/.aspnet/dev-certs/trust'
 
   - task: DotNetCoreCLI@2
     displayName: 'Run Integration Tests'
