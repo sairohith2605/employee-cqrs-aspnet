@@ -26,6 +26,7 @@ jobs:
 
       - name: Setup dev certs
         run: dotnet dev-certs https --trust
+        continue-on-error: true
         env:
           WSL_INTEROP: ""
 
