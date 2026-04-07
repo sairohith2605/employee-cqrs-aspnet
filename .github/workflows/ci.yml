@@ -40,7 +40,7 @@ jobs:
         run: dotnet build EmployeeManagement.sln --no-restore
 
       - name: Run Integration Tests
-        run: dotnet test EmployeeManagement.IntegrationTest/EmployeeManagement.IntegrationTest.csproj --no-build -v diag --logger "trx;LogFileName=integration-tests.trx" --results-directory ${{ runner.temp }}/TestResults
+        run: dotnet test EmployeeManagement.IntegrationTest/EmployeeManagement.IntegrationTest.csproj --no-build --logger "trx;LogFileName=integration-tests.trx" --results-directory ${{ runner.temp }}/TestResults
 
       - name: Publish Integration Test Results
         if: always()
