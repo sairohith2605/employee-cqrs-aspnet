@@ -39,6 +39,15 @@ steps:
       arguments: '--no-restore'
 
   - task: DotNetCoreCLI@2
+      displayName: Trust Dev Certs
+      inputs:
+        command: custom
+        custom: dev-certs
+        arguments: https --trust
+        env:
+          SSL_CERT_DIR: '$(HOME)/.aspnet/dev-certs/trust'
+
+  - task: DotNetCoreCLI@2
     displayName: 'Run Integration Tests'
     inputs:
       command: 'test'
