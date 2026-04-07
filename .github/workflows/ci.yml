@@ -24,6 +24,11 @@ jobs:
         with:
           dotnet-version: '10.x'
 
+      - name: Setup dev certs
+        run: dotnet dev-certs https --trust
+        env:
+          WSL_INTEROP: ""
+
       - name: Verify Docker is available
         run: docker info
 
