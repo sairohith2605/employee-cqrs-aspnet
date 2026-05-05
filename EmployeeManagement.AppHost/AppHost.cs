@@ -8,14 +8,14 @@ var migrationService = builder.AddProject<Projects.EmployeeManagement_MigrationS
     .WaitFor(sqldb);
 
 var keycloak = builder.AddKeycloak("keycloak", 8080)
-    .WithRealmImport("KeycloakConfiguration/employee-management-realm.json")
-    .WithDataVolume();
+    .WithRealmImport("KeycloakConfiguration/employee-management-realm.json");
 
 builder.AddProject<Projects.EmployeeManagementService>("employeemanagementservice")
     .WithReference(sqldb)
     .WaitFor(sqldb)
     .WithReference(migrationService)
     .WaitForCompletion(migrationService)
-    .WithReference(keycloak);
+    .WithReference(keycloak)
+    .WaitFor(keycloak);
 
 builder.Build().Run();
