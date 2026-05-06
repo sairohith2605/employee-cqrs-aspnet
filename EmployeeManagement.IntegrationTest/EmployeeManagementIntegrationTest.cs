@@ -24,9 +24,9 @@ public class EmployeeManagementIntegrationTest(ApplicationBaseTextFixture textFi
         };
 
         var response = await _httpClient.PostAsJsonAsync("/employees", command);
-        var result = await response.Content.ReadFromJsonAsync<CreateEmployeeResult>();
-
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+        
+        var result = await response.Content.ReadFromJsonAsync<CreateEmployeeResult>();
         Assert.NotNull(result);
         Assert.NotEqual(Guid.Empty, result.Id);
         Assert.Equal(command.FirstName, result.FirstName);
@@ -47,9 +47,9 @@ public class EmployeeManagementIntegrationTest(ApplicationBaseTextFixture textFi
         };
 
         var response = await _httpClient.PostAsJsonAsync("/employees", command);
-        var result = await response.Content.ReadFromJsonAsync<CreateEmployeeResult>();
-
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+        
+        var result = await response.Content.ReadFromJsonAsync<CreateEmployeeResult>();
         Assert.NotNull(response.Headers.Location);
         Assert.Contains(result!.Id.ToString(), response.Headers.Location.ToString());
     }
@@ -68,9 +68,9 @@ public class EmployeeManagementIntegrationTest(ApplicationBaseTextFixture textFi
         var created = await createResponse.Content.ReadFromJsonAsync<CreateEmployeeResult>();
 
         var getResponse = await _httpClient.GetAsync($"/employees/{created!.Id}");
-        var employee = await getResponse.Content.ReadFromJsonAsync<Employee>();
-
         Assert.Equal(HttpStatusCode.OK, getResponse.StatusCode);
+        
+        var employee = await getResponse.Content.ReadFromJsonAsync<Employee>();
         Assert.NotNull(employee);
         Assert.Equal(created.Id, employee.Id);
         Assert.Equal(command.FirstName, employee.FirstName);
