@@ -17,6 +17,18 @@ builder.Services.AddAuthentication()
         }
     });
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy =>
+        policy.RequireRole("admin"));
+
+    options.AddPolicy("AdminOrManager", policy =>
+        policy.RequireRole("admin", "manager"));
+
+    options.AddPolicy("AuthenticatedUser", policy =>
+        policy.RequireAuthenticatedUser());
+});
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("sqldb"));
@@ -45,6 +57,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 
 app.MapDefaultEndpoints();
